@@ -1,6 +1,6 @@
 # SKWAndroidSampleApp
 
-## How to build
+## How to build (Android Studio)
  1. Register an account on [SkyWay](http://nttcom.github.io/skyway/) and get an API key
  1. Clone or download this repository.
  1. Open "SkyWay-Android-Sample"
@@ -15,7 +15,7 @@ options.domain = "";
 ```
 ---
 
-## ビルド方法
+## ビルド方法(Android Studio)
  1. [SkyWay](http://nttcom.github.io/skyway/)でアカウントを作成し、APIkeyを取得
  1. このレポジトリをクローンまたはダウンロード
  1. "SkyWay-Android-Sample"を開く
