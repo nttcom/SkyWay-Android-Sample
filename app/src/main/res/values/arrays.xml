@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+	<string-array name="peer_server_type">
+		<item>SkyWay</item>
+		<item>PeerJS</item>
+		<item>LAN</item>
+	</string-array>
+
+</resources>
