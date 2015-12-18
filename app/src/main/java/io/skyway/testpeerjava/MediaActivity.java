@@ -69,9 +69,9 @@ public class MediaActivity
 		PeerOption options = new PeerOption();
 
 		//Enter your API Key.
-		options.key = " ";
+		options.key = "";
 		//Enter your registered Domain.
-		options.domain = " ";
+		options.domain = "";
 
 
 		// SKWPeer has many options. Please check the document. >> http://nttcom.github.io/skyway/docs/
@@ -123,6 +123,24 @@ public class MediaActivity
 				}
 
 				v.setEnabled(true);
+			}
+		});
+
+		//
+		Button switchCameraAction = (Button)findViewById(R.id.switchCameraAction);
+		switchCameraAction.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Boolean result = _msLocal.switchCamera();
+				if(true == result)
+				{
+					//Success
+				}else
+				{
+					//Failed
+				}
 			}
 		});
 

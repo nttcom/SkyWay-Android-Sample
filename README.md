@@ -15,7 +15,7 @@ options.domain = "";
 ```
 ---
 
-## ビルド方法(Android Studio)
+## ビルド方法 (Android Studio)
  1. [SkyWay](http://nttcom.github.io/skyway/)でアカウントを作成し、APIkeyを取得
  1. このレポジトリをクローンまたはダウンロード
  1. "SkyWay-Android-Sample"を開く
