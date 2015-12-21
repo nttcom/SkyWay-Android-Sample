@@ -373,21 +373,18 @@ public class DataActivity
 					}
 
 					strValue = sbResult.toString();
-				} else if (object instanceof ByteBuffer) {
-					// TODO: receive ByteBuffer object
-
-					ByteBuffer bbValue = (ByteBuffer) object;
+				} else if (object instanceof byte[]) {
+					// TODO: receive byte[] object
 					Bitmap bmp = null;
-
-					byte[] byteArray = new byte[bbValue.remaining()];
-					bbValue.get(byteArray);
+					byte[] byteArray = (byte[])object;
 					if (byteArray != null) {
 						bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 					}
+
 					_image = bmp;
 
 					updateUI();
-					strValue = "Received Image.(Type:ByteBuffer)";
+					strValue = "Received Image.(Type:byte[])";
 				}
 				addLog("Partner", strValue);
 			}
