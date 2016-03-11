@@ -11,19 +11,24 @@ import io.skyway.Peer.Peer;
 import io.skyway.Peer.PeerError;
 import io.skyway.Peer.PeerOption;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 
@@ -84,19 +89,16 @@ public class MediaActivity
 		//////////////////////////////////////////////////////////////////////
 
 
-		//////////////////////////////////////////////////////////////////////
-		////////////////// START: Get Local Stream   /////////////////////////
-		//////////////////////////////////////////////////////////////////////
-		Navigator.initialize(_peer);
-		MediaConstraints constraints = new MediaConstraints();
-		_msLocal = Navigator.getUserMedia(constraints);
 
-		Canvas canvas = (Canvas) findViewById(R.id.svSecondary);
-		canvas.addSrc(_msLocal, 0);
+		//request permissions
+		if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO},0);
+            }else{
+            startLocalStream();
+        }
 
-		//////////////////////////////////////////////////////////////////////
-		//////////////////// END: Get Local Stream   /////////////////////////
-		//////////////////////////////////////////////////////////////////////
 
 		_bCalling = false;
 
@@ -133,18 +135,45 @@ public class MediaActivity
 			@Override
 			public void onClick(View v)
 			{
-				Boolean result = _msLocal.switchCamera();
-				if(true == result)
-				{
-					//Success
-				}else
-				{
-					//Failed
+				if(null != _msLocal){
+					Boolean result = _msLocal.switchCamera();
+					if(true == result)
+					{
+						//Success
+					}else
+					{
+						//Failed
+					}
 				}
+
 			}
 		});
 
 	}
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 0: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startLocalStream();
+                }else{
+                    Toast.makeText(this,"Failed to access the camera and microphone.\nclick allow when asked for permission.",Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+        }
+    }
+
+    void startLocalStream(){
+        Navigator.initialize(_peer);
+        MediaConstraints constraints = new MediaConstraints();
+        _msLocal = Navigator.getUserMedia(constraints);
+
+        Canvas canvas = (Canvas) findViewById(R.id.svSecondary);
+        canvas.addSrc(_msLocal, 0);
+    }
+
 
 
 	/**
